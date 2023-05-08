@@ -1,0 +1,8 @@
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\bin\Debug\MaquinaDeDoces.exe.config
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\bin\Debug\MaquinaDeDoces.exe
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\bin\Debug\MaquinaDeDoces.pdb
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\obj\Debug\MaquinaDeDoces.csproj.AssemblyReference.cache
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\obj\Debug\MaquinaDeDoces.csproj.SuggestedBindingRedirects.cache
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\obj\Debug\MaquinaDeDoces.csproj.CoreCompileInputs.cache
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\obj\Debug\MaquinaDeDoces.exe
+C:\Users\bruno.fsilva72\source\repos\MaquinaDeDoces\MaquinaDeDoces\obj\Debug\MaquinaDeDoces.pdb

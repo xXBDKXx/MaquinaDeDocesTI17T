@@ -30,7 +30,7 @@ namespace MaquinaDeDoces
             ModificarQuantidade = 0;
             ModificarValidade = new DateTime();//0000/00/00 00:00:00
             ModificarSituacao = false;
-        }// Fim do metodo construtor
+        }// Fim do metodo construtor vazio aonde é prenchido com valores padrões 
 
         public Produto(int codigo, string nome, string descricao, double preco, int quantidade, DateTime dtValidade, Boolean situacao)
         {
@@ -41,9 +41,9 @@ namespace MaquinaDeDoces
             ModificarQuantidade = quantidade;
             ModificarValidade = dtValidade;
             ModificarSituacao = situacao;
-        }// Fim do metodo construtor com parametros
+        }// Fim do metodo construtor com parametros os valores são definidos pelo usuario
 
-        // Metodos Get e Set
+        // Metodos Get e Set(Metodo modificador e de consulta)
         // Metodos de Acesso e Modificação
         
         public int ModificarCodigo
