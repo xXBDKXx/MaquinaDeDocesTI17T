@@ -16,8 +16,12 @@ namespace MaquinaDeDoces
         private short FormaPagamento;
         private DateTime DataPagamento;
         private double ValorTotal;
+        private double TrocoMaquina;
+        private double Troco;
+        private int CodCartao;
+        private short BandeiraCartao;
 
-        public Pagamento() 
+        public Pagamento()
         {
             codigo = 0;
             descricao = "";
@@ -25,10 +29,14 @@ namespace MaquinaDeDoces
             FormaPagamento = 0;
             DataPagamento = new DateTime();
             ValorTotal = 0;
+            TrocoMaquina = 0;
+            Troco = 0;
+            CodCartao = 0;
+            BandeiraCartao = 0;
         }//Fim do Metodo construtor
 
         public int ModificarCodigo
-        { 
+        {
             get
             {
                 return this.codigo;
@@ -99,13 +107,37 @@ namespace MaquinaDeDoces
                 return this.ValorTotal;
             }//Fim do Get
 
-            set 
-            { 
-                this.ValorTotal = value; 
+            set
+            {
+                this.ValorTotal = value;
             }
         }// Fim do ModificarValorTotal
 
-        public void CadastrarPagamento (int codigo, string descricao, double valor, short FormaPagamento, DateTime DataPagamento, Double ValorTotal)
+        public double ModificarTrocoMaquina
+        {
+            get { return this.TrocoMaquina; }
+            set { this.TrocoMaquina = value; }
+        } //Fim do GetSet ModificarTrocoMaquina
+
+        public double ModificarTroco
+        {
+            get { return this.Troco; }
+            set { this.Troco = value; }
+        } //Fim do GetSet ModificarTroco
+
+        public int ModificarCodCartao
+        {
+            get { return this.CodCartao; }
+            set { this.CodCartao = value;}
+        }
+
+        public short ModificarBandeiraCartao
+        {
+            get { return this.BandeiraCartao; }
+            set { this.BandeiraCartao = value; }
+        }
+
+        public void CadastrarPagamento(int codigo, string descricao, double valor, short FormaPagamento, DateTime DataPagamento, Double ValorTotal )
         {
             ModificarCodigo = codigo;
             ModificarDescricao = descricao;
@@ -113,6 +145,8 @@ namespace MaquinaDeDoces
             ModificarPagamento = FormaPagamento;
             ModificarData = DataPagamento;
             ModificarValorTotal = ValorTotal;
+            ModificarTrocoMaquina = 100;
+            ModificarTroco = Troco;
         }
 
         public string ConsultarPagamento(int codigo)
@@ -134,52 +168,89 @@ namespace MaquinaDeDoces
             return msg;
         }
 
-        public double VerificarTroco(int codigo)
+        public void VerificarTroco(double entradaDinheiro, double valorProduto)
         {
-            double troco = 0;
-
-            if (ModificarCodigo == codigo)
+            Boolean respTroco = false;
+            respTroco = ExisteTroco(entradaDinheiro, valorProduto);
+            if (respTroco == true )
             {
-                if (ModificarPagamento == 2)
-                {
-                    troco = (ModificarValorTotal - ModificarValor);
-                }
-                else
-                {
-                    troco = 0;
-                }
+                ModificarTroco = entradaDinheiro - valorProduto;
             }
-            return troco; //Return SEMPRE FORA DOS ifs 
-        }
-        
-        public string EfetuarPagamento(int codigo)
-        {
-            string msg = "";
-
-            if (ModificarCodigo == codigo)
+            else
             {
-                if(ModificarValorTotal > ModificarValor)
-                {
-                    msg = "Erro!, Valor de Pagamento insuficiente";
-                }
-                else
-                {
-                    msg = "Pagamento Realizado!!";
-                    double troco = VerificarTroco(codigo); //É preciso uma variavel para armazenar o resultado do VerificarTroco
-                }
+                ModificarTroco = 0;
             }
-            return msg;
-        }
+        }//Fim do VerificarTroco
 
-        public void MetodoPagamento(int codigo)
+        public string VerificarNotas(double EntradaDinheiro, double valorProduto)
         {
-            if (ModificarCodigo == codigo)
-            { 
-                if ()
+            if (EntradaDinheiro >= valorProduto)
+            {
+                return "OK";
             }
+            else
+            {
+                return "NOK";
+            }
+        }// Fim do VerificarNotas
 
+        public Boolean ExisteTroco(double entradaDinheiro, double valorProduto)
+        {
+            string resposta = VerificarNotas(entradaDinheiro, valorProduto);
+            {
+                if (entradaDinheiro > valorProduto)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }//Fim do metodo
+
+        public string MenuFormaDePagamento()
+        {
+            return "Escolha uma das opções abaixo: " + "\n1. Dinheiro \n2. Cartão";
+        }//Fim do Metodo
+
+        public void ColetarFormaDePagamento(short opcao)
+        {
+            ModificarPagamento = opcao;
         }
 
-    }// Fim da Classe
 
-}
+        public void EfetuarPagamentoDinheiro(short opcao, double entradaPagamento, double valorProduto)
+        {
+            string resp = "";
+            resp = VerificarNotas(entradaPagamento, valorProduto);
+
+            if (resp == "OK")
+            {
+                ModificarCodigo = ModificarCodigo + 1;
+                ModificarValorTotal = valorProduto;
+                ModificarPagamento = opcao;
+                ModificarData = DateTime.Now;// Pegar a data e hora da transação
+                ModificarTrocoMaquina += valorProduto;
+                VerificarTroco(entradaPagamento, valorProduto);
+                imprimir();
+            }
+        }//Fim do Metodo
+
+
+        public void EfetuarPagamentoCartao(double entradaPagamento, double valorProduto, int codCartao, short BandeiraCartao)
+        {
+            ModificarCodigo = ModificarCodigo + 1;
+            ModificarValorTotal = valorProduto;
+            ModificarPagamento = 2;
+            ModificarData = DateTime.Now;// Pegar a data e hora da transação
+            ModificarBandeiraCartao = BandeiraCartao;
+            ModificarCodCartao = codCartao;
+            imprimir();
+        }
+
+        //Metodo Imprimir
+        public string imprimir()
+        {
+            return "Codigo: " + ModificarCodigo + "\nValor Total: " + ModificarValorTotal + "Troco: " + ModificarTroco + "\nForma de Pagamento: " + ModificarPagamento + "\nData e Hora: " + ModificarData; 
+        }// Fim do Metodo Imprimir
+
+    }//Fim da Classe
+}// Ffim do Projeto
