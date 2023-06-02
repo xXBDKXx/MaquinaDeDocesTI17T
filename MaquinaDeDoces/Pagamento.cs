@@ -211,13 +211,7 @@ namespace MaquinaDeDoces
             return "Escolha uma das opções abaixo: " + "\n1. Dinheiro \n2. Cartão";
         }//Fim do Metodo
 
-        public void ColetarFormaDePagamento(short opcao)
-        {
-            ModificarPagamento = opcao;
-        }
-
-
-        public void EfetuarPagamentoDinheiro(short opcao, double entradaPagamento, double valorProduto)
+        public void EfetuarPagamentoDinheiro( double entradaPagamento, double valorProduto)
         {
             string resp = "";
             resp = VerificarNotas(entradaPagamento, valorProduto);
@@ -226,16 +220,15 @@ namespace MaquinaDeDoces
             {
                 ModificarCodigo = ModificarCodigo + 1;
                 ModificarValorTotal = valorProduto;
-                ModificarPagamento = opcao;
+                ModificarPagamento = 1;
                 ModificarData = DateTime.Now;// Pegar a data e hora da transação
                 ModificarTrocoMaquina += valorProduto;
                 VerificarTroco(entradaPagamento, valorProduto);
-                imprimir();
             }
         }//Fim do Metodo
 
 
-        public void EfetuarPagamentoCartao(double entradaPagamento, double valorProduto, int codCartao, short BandeiraCartao)
+        public void EfetuarPagamentoCartao(double valorProduto, int codCartao, short BandeiraCartao)
         {
             ModificarCodigo = ModificarCodigo + 1;
             ModificarValorTotal = valorProduto;
@@ -249,7 +242,7 @@ namespace MaquinaDeDoces
         //Metodo Imprimir
         public string imprimir()
         {
-            return "Codigo: " + ModificarCodigo + "\nValor Total: " + ModificarValorTotal + "Troco: " + ModificarTroco + "\nForma de Pagamento: " + ModificarPagamento + "\nData e Hora: " + ModificarData; 
+            return "Codigo: " + ModificarCodigo + "\nValor Total: R$ " + ModificarValorTotal + "\nTroco: R$ " + ModificarTroco + "\nForma de Pagamento: " + ModificarPagamento + "\nData e Hora: " + ModificarData; 
         }// Fim do Metodo Imprimir
 
     }//Fim da Classe
